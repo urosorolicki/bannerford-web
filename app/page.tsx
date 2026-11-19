@@ -6,32 +6,65 @@ import { Symbol } from "@/components/symbol"
 const github = "https://github.com/urosorolicki"
 const repository = `${github}/bannerford-web`
 
+const features = [
+  { title: "Build", preview: "Your settlement", icon: "build", href: "#construction", art: "feature-build", copy: "From simple houses to a thriving town." },
+  { title: "Produce", preview: "Your resources", icon: "grain", href: "#economy", art: "feature-produce", copy: "Gather, farm, and craft what your town needs." },
+  { title: "Manage", preview: "Your people", icon: "manage", href: "#daily-life", art: "feature-manage", copy: "Assign jobs, meet needs, and help the village grow." },
+  { title: "Expand", preview: "Your town", icon: "expand", href: "#world", art: "feature-expand", copy: "Find room for new roads, fields, and neighborhoods." },
+] as const
+
 export default function Home() {
   return (
     <>
       <a className="skip-link" href="#main-content">Skip to content</a>
-      <Header />
+      <Header repository={repository} />
       <main id="main-content" tabIndex={-1}>
-        <section id="top" tabIndex={-1} className="hero" aria-labelledby="game-title">
+        <div className="opening" id="top" tabIndex={-1}>
           <picture className="hero-art">
             <source media="(max-width: 600px)" srcSet="/art/bannerford-hero-mobile.webp" />
-            <Image src="/art/bannerford-hero.webp" alt="A stone bridge over a river leads to a medieval village among farms and wooded hills" fill sizes="100vw" loading="eager" fetchPriority="high" />
+            <Image src="/art/bannerford-hero.webp" alt="An alpine village with a watermill, a stone bridge, and a red banner at the edge of the forest" fill sizes="100vw" loading="eager" fetchPriority="high" />
           </picture>
           <div className="hero-scrim" />
-          <div className="hero-inner wrap">
+          <section className="hero editorial-wrap" aria-labelledby="game-title">
             <div className="hero-content">
-              <p className="eyebrow hero-kicker"><span /> A medieval settlement builder</p>
-              <h1 id="game-title">Bannerford</h1>
-              <p className="hero-tagline">A town begins with a crossing.</p>
-              <p className="hero-description">Build by the river, follow the people who call it home, and grow a village into a working medieval town.</p>
+              <p className="eyebrow hero-kicker">A medieval city-builder</p>
+              <h1 id="game-title">Build. Grow. <span>Thrive.</span></h1>
+              <p className="hero-description">Shape a living settlement, manage your people, and build a strong economy in Bannerford.</p>
               <div className="hero-actions">
-                <a href="#world" className="button button-gold">Explore the World</a>
-                <a href="#settlement" className="button button-ghost">Discover the Game</a>
+                <a href="#settlement" className="button button-gold">Explore the Game</a>
+                <a href="#journal" className="button button-ghost">Development Journal</a>
               </div>
+              <nav className="hero-topics" aria-label="Explore game features">
+                {features.map(({ title, preview, href, icon }) => (
+                  <a href={href} key={href}><Symbol name={icon} size={24} /><span>{title}<small>{preview}</small></span></a>
+                ))}
+              </nav>
             </div>
+            <span className="hero-credit">Concept art</span>
+          </section>
+
+          <section className="feature-deck wrap" id="features" tabIndex={-1} aria-label="Game features">
+            {features.map(({ title, href, art, icon, copy }) => (
+              <a href={href} className="feature-tile" key={href}>
+                <Image src={`/art/${art}.webp`} alt="" fill sizes="(max-width: 900px) 50vw, 25vw" />
+                <div className="feature-tile-copy"><Symbol name={icon} size={23} /><div><h2>{title}</h2><p>{copy}</p></div></div>
+              </a>
+            ))}
+            <span className="sr-only">Feature illustrations are concept art.</span>
+          </section>
+        </div>
+
+        <section className="vision" aria-labelledby="vision-title">
+          <div className="vision-scroll">
+            <Image className="vision-paper" src="/art/vision-parchment.webp" fill sizes="100vw" alt="" />
+            <Image className="vision-sketch" src="/art/vision-sketch.webp" width={800} height={312} alt="" />
+            <div className="vision-copy">
+              <p className="eyebrow">The vision</p>
+              <h2 id="vision-title">A Living, Breathing Settlement</h2>
+              <p>Bannerford is a medieval city-builder about people, trade, and the story of a growing settlement. Build at your own pace.</p>
+            </div>
+            <Image className="vision-seal" src="/art/vision-seal.webp" width={305} height={320} alt="" />
           </div>
-          <a className="hero-scroll" href="#settlement" aria-label="Scroll to the settlement"><Symbol name="down" size={20} /></a>
-          <span className="hero-credit">Concept art</span>
         </section>
 
         <section id="settlement" tabIndex={-1} className="section parchment">
@@ -47,7 +80,7 @@ export default function Home() {
               <figcaption><span>Life along the village road</span><span>Concept art</span></figcaption>
             </figure>
           </div>
-          <div className="wrap progression">
+          <div className="wrap progression" id="construction" tabIndex={-1}>
             <div className="progression-title">
               <p className="eyebrow"><span /> Construction &amp; progression</p>
               <h2>From a ford to a town.</h2>
@@ -107,7 +140,7 @@ export default function Home() {
           </div>
         </section>
       </main>
-      <footer className="site-footer dark">
+      <footer className="site-footer dark" id="community" tabIndex={-1}>
         <div className="wrap footer-inner">
           <a className="brand" href="#top" aria-label="Bannerford home"><Image src="/crest.svg" alt="" width={38} height={43} /><span>Bannerford</span></a>
           <nav aria-label="Project links">
